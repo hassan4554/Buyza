@@ -27,10 +27,6 @@ const signup = catchAsync(async (req, res, next) => {
     email: email,
     password: password,
     avatar: img,
-    // avatar: {
-    //   public_id: myCloud.public_id,
-    //   url: myCloud.secure_url,
-    // },
   };
 
   const activationToken = createActivationToken(user);
@@ -40,7 +36,28 @@ const signup = catchAsync(async (req, res, next) => {
   await sendMail({
     email: user.email,
     subject: "Activate your account",
-    message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
+    // message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
+    message: `<!DOCTYPE html>
+<html>
+  <body>
+    <p>Hello ${user.name},</p>
+    <p>Please click the button below to activate your account:</p>
+    <a href="${activationUrl}" target="_blank" style="
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #007BFF;
+      text-decoration: none;
+      border-radius: 6px;
+    ">
+      Activate Account
+    </a>
+    <p>If the button doesn’t work, you can also copy and paste the following URL into your browser:</p>
+    <p><a href="${activationUrl}">${activationUrl}</a></p>
+  </body>
+</html>
+`,
   });
   return successResponse.sendData(res, {
     status: 200,

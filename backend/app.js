@@ -10,7 +10,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://buyza.vercel.app/",
     credentials: true,
   })
 );
