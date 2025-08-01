@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+
+  --breakpoint-400px: 400px;
+  --breakpoint-600px: 600px;
+  --breakpoint-800px: 800px;
+  --breakpoint-1000px: 1050px;
+  --breakpoint-1100px: 1110px;
+  --breakpoint-1300px: 1300px;
+}
+
+button:hover {
+  cursor: pointer;
+}
