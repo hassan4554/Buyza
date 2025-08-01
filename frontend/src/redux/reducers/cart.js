@@ -3,9 +3,15 @@ import { toast } from "react-toastify";
 import { getFromLocalStorage, setToLocalStorage } from "../../utils/helper";
 
 const initialState = {
-  cart: localStorage.getItem("cart")
-    ? JSON.parse(localStorage.getItem("cart"))
-    : [],
+  cart: (() => {
+    try {
+      const cartData = localStorage.getItem("cart");
+      return cartData ? JSON.parse(cartData) : [];
+    } catch (error) {
+      console.error("Error parsing cart data:", error);
+      return [];
+    }
+  })(),
 };
 
 export const cartSlice = createSlice({
@@ -21,27 +27,40 @@ export const cartSlice = createSlice({
         return;
       }
 
-      const localStorageData = getFromLocalStorage("cart");
-      let data = localStorageData ? JSON.parse(localStorageData) : [];
-      data = [...data, item];
-      setToLocalStorage("cart", JSON.stringify(data));
-      state.cart = [...state.cart, item];
-      toast.success("Item added to cart successfully!");
+      try {
+        const localStorageData = getFromLocalStorage("cart");
+        let data = localStorageData ? JSON.parse(localStorageData) : [];
+        data = [...data, item];
+        setToLocalStorage("cart", JSON.stringify(data));
+        state.cart = [...state.cart, item];
+        toast.success("Item added to cart successfully!");
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        toast.error("Error adding item to cart");
+      }
     },
 
     removeFromCart: (state, action) => {
-      const data = state.cart.filter((i) => i.id !== action.payload);
-      state.cart = [...data];
-      setToLocalStorage("cart", JSON.stringify(data));
+      try {
+        const data = state.cart.filter((i) => i.id !== action.payload);
+        state.cart = [...data];
+        setToLocalStorage("cart", JSON.stringify(data));
+      } catch (error) {
+        console.error("Error removing from cart:", error);
+      }
     },
 
     updateQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const updatedCart = state.cart.map((item) =>
-        item.id === id ? { ...item, qty: quantity } : item
-      );
-      state.cart = updatedCart;
-      setToLocalStorage("cart", JSON.stringify(updatedCart));
+      try {
+        const { id, quantity } = action.payload;
+        const updatedCart = state.cart.map((item) =>
+          item.id === id ? { ...item, qty: quantity } : item
+        );
+        state.cart = updatedCart;
+        setToLocalStorage("cart", JSON.stringify(updatedCart));
+      } catch (error) {
+        console.error("Error updating cart quantity:", error);
+      }
     },
 
     emptyCart: (state) => {
