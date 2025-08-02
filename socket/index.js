@@ -4,16 +4,11 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const corsOptions = require("./config/cors");
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "https://buyza.vercel.app/",
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
+const io = new Server(server, corsOptions);
 const port = process.env.PORT || 4000;
 
 app.use(cors());

@@ -7,18 +7,12 @@ const bodyParser = require("body-parser");
 const { globalErrorHanlder } = require("./middleware");
 const routes = require("./routes");
 const cors = require("cors");
+const corsOptions = require("./config/cors");
 
-app.use(
-  cors({
-    origin: "https://buyza.vercel.app/",
-    credentials: true,
-  })
-);
-
+app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
-app.use("/", express.static("uploads"));
 
 app.use("/ping", (req, res) => {
   res.send("pong");
