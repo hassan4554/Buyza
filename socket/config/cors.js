@@ -1,4 +1,4 @@
-const allowedOrigins = ["http://localhost:5173", "https://buyza.vercel.app/"];
+const allowedOrigins = ["http://localhost:5173", "https://buyza.vercel.app"];
 
 const corsOptions = {
   origin: (origin, callback) => {

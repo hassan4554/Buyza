@@ -8,7 +8,8 @@
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
     "build": "cd frontend && npm install && npm run build",
-    "client": "cd frontend && npm run dev"
+    "client": "cd frontend && npm run dev",
+    "socket": "cd socket && npm run dev"
   },
   "author": "Hassan Mehmood",
   "license": "ISC",

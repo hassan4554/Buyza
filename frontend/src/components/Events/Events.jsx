@@ -14,10 +14,12 @@ const Events = () => {
           </div>
 
           <div className="w-full grid">
-            {allEvents.length !== 0 && (
+            {allEvents && allEvents.length !== 0 && (
               <EventCard data={allEvents && allEvents[0]} />
             )}
-            <h4 className="text-center font-semibold">{allEvents?.length === 0 && "Currently no events!"}</h4>
+            <h4 className="text-center font-semibold">
+              {allEvents?.length === 0 && "Currently no events!"}
+            </h4>
           </div>
         </div>
       )}
