@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { requestWrapper } from "../../utils/request_wrapper";
 import { server } from "../../server";
+import { removeFromLocalStorage } from "../../utils/helper";
 
 export const get_shop = createAsyncThunk(
   "get_shop",
@@ -42,6 +43,7 @@ export const sellerSlice = createSlice({
       state.seller = null;
       state.isSeller = false;
       state.error = null;
+      removeFromLocalStorage("Seller_token");
     },
     clearErrors: (state) => {
       state.error = null;

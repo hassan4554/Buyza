@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { requestWrapper } from "../../utils/request_wrapper";
 import { server } from "../../server";
+import { removeFromLocalStorage } from "../../utils/helper";
 
 export const get_user = createAsyncThunk(
   "get_user",
@@ -143,6 +144,7 @@ export const userSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.error = null;
+      removeFromLocalStorage("token");
     },
     clearErrors: (state) => {
       state.error = null;
