@@ -10,7 +10,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://buyza.vercel.app",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   },
 });
@@ -56,7 +56,6 @@ io.on("connection", (socket) => {
 
   ///   Send Message
   socket.on("sendMessage", ({ senderId, receiverId, text, images }) => {
-
     const user = getUser(receiverId);
 
     if (user && user.socketId) {
