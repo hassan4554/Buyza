@@ -11,13 +11,17 @@ import ErrorBox from "../Error/ErrorBox";
 import Error from "../Error/Error";
 import { useDispatch } from "react-redux";
 import { get_shop } from "../../redux/reducers/seller";
+import { setToLocalStorage } from "../../utils/helper";
+import PageLoader from "../Layout/PageLoader";
 
 const ShopLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (values) => {
+    setIsLoading(true);
     const res = await requestWrapper(
       `${server}/shop/login`,
       values,
@@ -25,8 +29,10 @@ const ShopLogin = () => {
       "application/json"
     );
 
+    setIsLoading(false);
     if (res.status === 200) {
       toast.success(res.data.message);
+      setToLocalStorage("Seller_token", res.data.data);
       dispatch(get_shop({}));
       navigate("/dashboard");
       resetForm();
@@ -55,6 +61,7 @@ const ShopLogin = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      {isLoading && <PageLoader />}
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Login to your shop

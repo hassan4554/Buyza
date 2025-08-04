@@ -7,9 +7,12 @@ const bodyParser = require("body-parser");
 const { globalErrorHanlder } = require("./middleware");
 const routes = require("./routes");
 const cors = require("cors");
-const corsOptions = require("./config/cors");
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());

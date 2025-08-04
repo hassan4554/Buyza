@@ -10,13 +10,16 @@ import ErrorBox from "../Error/ErrorBox";
 import Error from "../Error/Error";
 import { shopCreateSchema } from "../../schemas/shopCreate";
 import { requestWrapper } from "../../utils/request_wrapper";
+import PageLoader from "../Layout/PageLoader";
 
 const ShopCreate = () => {
   const [avatar, setAvatar] = useState();
   const [visible, setVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
+    setIsLoading(true);
     const res = await requestWrapper(
       `${server}/shop/create`,
       { ...values, avatar },
@@ -24,6 +27,7 @@ const ShopCreate = () => {
       "application/json"
     );
 
+    setIsLoading(false);
     if (res.status === 200) {
       toast.success(res.data.message);
       resetForm();
@@ -70,6 +74,7 @@ const ShopCreate = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      {isLoading && <PageLoader />}
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Register as a seller

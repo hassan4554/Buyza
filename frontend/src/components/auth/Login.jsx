@@ -12,6 +12,7 @@ import { requestWrapper } from "../../utils/request_wrapper";
 import { get_user } from "../../redux/reducers/user";
 import { useDispatch } from "react-redux";
 import PageLoader from "../Layout/PageLoader";
+import { setToLocalStorage } from "../../utils/helper";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const Login = () => {
       return;
     }
 
+    setToLocalStorage("token", response.data.data);
     toast.success("Login Success!");
     dispatch(get_user({}));
     navigate("/");

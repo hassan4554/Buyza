@@ -29,19 +29,11 @@ const activation = catchAsync(async (req, res, next) => {
   });
 
   const accessToken = await shop.getJwtToken();
-  const cookieOptions = {
-    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  };
-
-  return successResponse.sendDataAndCookie(res, {
+ 
+  return successResponse.sendData(res, {
     status: 200,
-    message: "Shop registered successfully",
-    token: accessToken,
-    cookieOptions,
-    token_name: "Seller_token",
+    message: "User registered successfully",
+    data: accessToken,
   });
 });
 

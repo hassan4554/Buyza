@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { server } from "../server";
 import { requestWrapper } from "../utils/request_wrapper";
 import Loader from "../components/Layout/Loader";
+import { setToLocalStorage } from "../utils/helper";
 
 const ActivationPage = ({ type = "auth" }) => {
   const { token } = useParams();
@@ -21,14 +22,17 @@ const ActivationPage = ({ type = "auth" }) => {
         );
         console.log(response);
 
+        setIsLoading(false);
         if (response.status !== 200) {
           setError(true);
+          return;
         }
-        setIsLoading(false);
+        const name = type === "auth" ? "token" : "Seller_token";
+        setToLocalStorage(name, response.data.data);
       };
       sendRequest();
     }
-  }, []);
+  }, [token, type]);
 
   if (isLoading) return <Loader />;
 

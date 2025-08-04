@@ -45,7 +45,62 @@ const updateStatus = catchAsync(async (req, res, next) => {
     const options = {
       email: order.user.email,
       subject: `Update On Order Status`,
-      message: `Hi ${order.user.name}.\nYour order with order id: ${order._id} has been ${order.status}`,
+      message: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Order Status Update</title>
+  </head>
+  <body style="margin:0; padding:0; background-color:#f4f4f4;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; background-color: #ffffff; font-family: Arial, sans-serif;">
+      <tr>
+        <td align="center" bgcolor="#4CAF50" style="padding: 40px 0; color: #ffffff; font-size: 28px; font-weight: bold;">
+          Your Order is on its Way!
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 40px 30px 20px 30px;">
+          <p style="margin: 0; font-size: 18px;">Hi ${order.user.name},</p>
+          <p style="margin: 20px 0 0 0; font-size: 16px; line-height: 24px;">
+            We’re excited to let you know that your order <strong>#${
+              order._id
+            }</strong> has been 
+            <span style="color: #4CAF50; font-weight: bold;">${
+              order.status === "Delivered" ? "Delivered" : "Shipped"
+            }</span>!
+          </p>
+          <p style="margin: 20px 0 0 0; font-size: 16px; line-height: 24px;">
+            You can track your package and see its current status by clicking the button below.
+          </p>
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 20px 0;">
+            <tr>
+              <td align="center">
+                <a href="${process.env.FRONTEND_URL}/user/order/track/${
+        order._id
+      }" style="background-color: #4CAF50; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 4px; display: inline-block;">
+                  Track Your Order
+                </a>
+              </td>
+            </tr>
+          </table>
+          <p style="margin: 20px 0 0 0; font-size: 16px; line-height: 24px;">
+            Thank you for shopping with us! If you have any questions, feel free to reach out to our support team.
+          </p>
+          <p style="margin: 20px 0 0 0; font-size: 16px;">
+            Best regards,<br />
+            The Buyza Team
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td bgcolor="#eeeeee" style="padding: 20px 30px; text-align: center; font-size: 12px; color: #666666;">
+          &copy; 2025 Buyza. All rights reserved.<br />
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+`,
     };
     await sendMail(options);
   }

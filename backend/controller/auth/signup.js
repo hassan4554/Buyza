@@ -18,10 +18,6 @@ const signup = catchAsync(async (req, res, next) => {
 
   img = await uploadSingleImage(avatar, "avatars");
 
-  // const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-  //   folder: "avatars",
-  // });
-
   const user = {
     name: name,
     email: email,
@@ -31,12 +27,11 @@ const signup = catchAsync(async (req, res, next) => {
 
   const activationToken = createActivationToken(user);
 
-  const activationUrl = `http://localhost:5173/activation/${activationToken}`;
+  const activationUrl = `${process.env.FRONTEND_URL}/activation/${activationToken}`;
 
   await sendMail({
     email: user.email,
     subject: "Activate your account",
-    // message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
     message: `<!DOCTYPE html>
 <html>
   <body>

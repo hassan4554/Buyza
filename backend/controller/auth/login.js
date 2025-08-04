@@ -24,11 +24,10 @@ const login = catchAsync(async (req, res, next) => {
   };
   const token = user.getJwtToken();
 
-  return successResponse.sendDataAndCookie(res, {
+  return successResponse.sendData(res, {
     status: 200,
     message: "Login successful",
-    token,
-    cookieOptions,
+    data: token,
   });
 });
 module.exports = login;

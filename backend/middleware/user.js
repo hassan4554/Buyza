@@ -3,7 +3,7 @@ const { User, Shop } = require("../model/");
 const { AppError, catchAsync } = require("../utils");
 
 const isAuthenticated = catchAsync(async (req, res, next) => {
-  const { token } = req.cookies;
+  const token = req.headers["authorization"].split(" ")[1];
 
   if (!token) {
     return next(new AppError("Please login to continue", 401));
@@ -17,7 +17,8 @@ const isAuthenticated = catchAsync(async (req, res, next) => {
 });
 
 const isSeller = catchAsync(async (req, res, next) => {
-  const { Seller_token } = req.cookies;
+  const Seller_token = req.headers["x-seller-token"];
+
   if (!Seller_token) {
     return next(new AppError("Please login to continue", 401));
   }

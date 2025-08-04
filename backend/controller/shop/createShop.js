@@ -4,33 +4,27 @@ const {
   AppError,
   createActivationToken,
   sendMail,
+  uploadSingleImage,
 } = require("../../utils");
 const { Shop } = require("../../model");
-const cloudinary = require("cloudinary");
 
 const createShop = catchAsync(async (req, res, next) => {
   const { name, email, password, avatar, phoneNumber, zipCode, address } =
     req.body;
-  console.log("req.body");
-  console.log(req.body);
+
   const shopEmail = await Shop.findOne({ email });
 
   if (shopEmail) {
     return next(new AppError("Shop already exists", 400));
   }
 
-  const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-    folder: "avatars",
-  });
+  const img = await uploadSingleImage(avatar, "avatars");
 
   const shop = {
     name,
     email,
     password,
-    avatar: {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
-    },
+    avatar: img,
     phoneNumber,
     zipCode,
     address,
@@ -38,12 +32,32 @@ const createShop = catchAsync(async (req, res, next) => {
 
   const activationToken = createActivationToken(shop);
 
-  const activationUrl = `http://localhost:5173/shop/activation/${activationToken}`;
+  const activationUrl = `${process.env.FRONTEND_URL}/shop/activation/${activationToken}`;
 
   await sendMail({
     email: shop.email,
     subject: "Activate your account",
-    message: `Hello ${shop.name}, please click on the link to activate your account: ${activationUrl}`,
+    message: `<!DOCTYPE html>
+<html>
+  <body>
+    <p>Hello ${shop.name},</p>
+    <p>Please click the button below to activate your account:</p>
+    <a href="${activationUrl}" target="_blank" style="
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #007BFF;
+      text-decoration: none;
+      border-radius: 6px;
+    ">
+      Activate Account
+    </a>
+    <p>If the button doesn’t work, you can also copy and paste the following URL into your browser:</p>
+    <p><a href="${activationUrl}">${activationUrl}</a></p>
+  </body>
+</html>
+`,
   });
   return successResponse.sendData(res, {
     status: 200,

@@ -24,12 +24,10 @@ const login = catchAsync(async (req, res, next) => {
   };
   const token = shop.getJwtToken();
 
-  return successResponse.sendDataAndCookie(res, {
+  return successResponse.sendData(res, {
     status: 200,
     message: "Login successful",
-    token,
-    cookieOptions,
-    token_name: "Seller_token",
+    data: token,
   });
 });
 module.exports = login;

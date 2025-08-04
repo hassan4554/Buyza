@@ -8,10 +8,14 @@ const corsOptions = require("./config/cors");
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server, corsOptions);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  },
+});
 const port = process.env.PORT || 4000;
 
-app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
@@ -42,11 +46,9 @@ io.on("connection", (socket) => {
   console.log("a user connected");
 
   socket.on("addUser", (userId) => {
-    console.log("User added:", userId, "with socket:", socket.id);
     addUser(userId, socket.id);
     // Convert Map to object for frontend compatibility
     const usersObject = Object.fromEntries(users);
-    console.log("Current users:", usersObject);
     io.emit("getUsers", usersObject);
   });
 
@@ -54,18 +56,10 @@ io.on("connection", (socket) => {
 
   ///   Send Message
   socket.on("sendMessage", ({ senderId, receiverId, text, images }) => {
-    console.log("Received sendMessage event:", {
-      senderId,
-      receiverId,
-      text,
-      images,
-    });
 
     const user = getUser(receiverId);
-    console.log("Target user:", user);
 
     if (user && user.socketId) {
-      console.log("Sending message to socket:", user.socketId);
       io.to(user.socketId).emit("getMessage", {
         senderId,
         text,
