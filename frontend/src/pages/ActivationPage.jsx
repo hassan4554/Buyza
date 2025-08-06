@@ -37,7 +37,7 @@ const ActivationPage = ({ type = "auth" }) => {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center bg-[var(--color-background)]">
       {error ? (
         <p>Your token is expired!</p>
       ) : (

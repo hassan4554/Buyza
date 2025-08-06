@@ -7,12 +7,10 @@ const CheckoutPage = () => {
   return (
     <div>
       <Header />
-      <br />
-      <br />
+      <div className="py-4 bg-[var(--color-background)]"></div>
       <CheckoutSteps active={1} />
       <Checkout />
-      <br />
-      <br />
+      <div className="py-4 bg-[var(--color-background)]"></div>
       <Footer />
     </div>
   );

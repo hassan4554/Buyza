@@ -14,7 +14,7 @@ const TrackOrder = () => {
   }, [dispatch, id]);
 
   return (
-    <div className="w-full h-[80vh] flex justify-center items-center">
+    <div className="w-full h-[80vh] flex justify-center items-center bg-[var(--color-background)]">
       <>
         {data && data?.status === "Processing" ? (
           <h1 className="text-[20px]">Your Order is processing in shop.</h1>

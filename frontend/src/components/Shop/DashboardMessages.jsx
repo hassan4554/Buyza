@@ -8,6 +8,7 @@ import { ENDPOINT } from "../../server";
 import { toast } from "react-toastify";
 import SellerInbox from "../Inbox/SellerInbox";
 import MessageList from "../Inbox/MessageList";
+import PageLoader from "../Layout/PageLoader";
 
 const DashboardMessages = () => {
   const { seller, isLoading } = useSelector((state) => state.seller);
@@ -24,6 +25,7 @@ const DashboardMessages = () => {
   const [open, setOpen] = useState(false);
   const scrollRef = useRef(null);
   const [socketId, setSocketId] = useState(null);
+  const [chatLoading, setChatLoading] = useState(false);
 
   // Initialize socket connection
   useEffect(() => {
@@ -63,6 +65,7 @@ const DashboardMessages = () => {
 
   useEffect(() => {
     const getConversation = async () => {
+      setChatLoading(true);
       const res = await requestWrapper(
         `${server}/conversation/get-seller-conversations`,
         {},
@@ -72,6 +75,7 @@ const DashboardMessages = () => {
       if (res.status === 200) {
         setConversations(res.data.data);
       }
+      setChatLoading(false);
     };
     getConversation();
   }, [seller, messages]);
@@ -98,6 +102,7 @@ const DashboardMessages = () => {
   // get messages
   useEffect(() => {
     const getMessage = async () => {
+      setChatLoading(true);
       const response = await requestWrapper(
         `${server}/message/get-all?id=${currentChat?._id}`,
         {},
@@ -109,6 +114,7 @@ const DashboardMessages = () => {
         return;
       }
       setMessages(response.data.data);
+      setChatLoading(false);
     };
     getMessage();
   }, [currentChat]);
@@ -252,14 +258,15 @@ const DashboardMessages = () => {
   }, [messages]);
 
   return (
-    <div className="w-[90%] bg-white m-5 h-[85vh] overflow-y-scroll rounded">
+    <div className="w-[90%] bg-[var(--color-background)] m-5 h-[85vh] overflow-y-scroll rounded">
+      {chatLoading && <PageLoader />}
       {!open && (
         <>
           <h1 className="text-center text-[30px] py-3 font-Poppins">
             All Messages
           </h1>
           {/* All messages list */}
-          {conversations &&
+          {conversations.length ? (
             conversations.map((item, index) => (
               <MessageList
                 data={item}
@@ -275,7 +282,12 @@ const DashboardMessages = () => {
                 isLoading={isLoading}
                 inboxType={"user"}
               />
-            ))}
+            ))
+          ) : (
+            <div className="text-center font-semibold flex items-center justify-center absolute top-[50%] left-[60%] -translate-y-1/2 -translate-x-1/2 text-[20px] font-Poppins">
+              No messages found
+            </div>
+          )}
         </>
       )}
 

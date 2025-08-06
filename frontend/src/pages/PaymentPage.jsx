@@ -8,12 +8,10 @@ const PaymentPage = () => {
   return (
     <div className="w-full min-h-screen bg-[#f6f9fc]">
       <Header />
-      <br />
-      <br />
+      <div className="py-4 bg-[var(--color-background)]"></div>
       <CheckoutSteps active={2} />
       <Payment />
-      <br />
-      <br />
+      <div className="py-4 bg-[var(--color-background)]"></div>
       <Footer />
     </div>
   );

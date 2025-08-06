@@ -21,7 +21,7 @@ const SuggestedProduct = ({ data }) => {
   return (
     <div>
       {productsData?.length ? (
-        <div className={`p-4 ${styles.section}`}>
+        <div className={`py-4 px-20 w-full bg-[var(--color-background)]`}>
           <h2
             className={`${styles.heading} text-[25px] font-[500] border-b mb-5`}
           >

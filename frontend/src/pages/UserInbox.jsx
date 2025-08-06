@@ -24,16 +24,6 @@ const UserInbox = () => {
   const scrollRef = useRef(null);
   const [socketId, setSocketId] = useState(null);
 
-  //   useEffect(() => {
-  //     socketId.on("getMessage", (data) => {
-  //       setArrivalMessage({
-  //         sender: data.senderId,
-  //         text: data.text,
-  //         createdAt: Date.now(),
-  //       });
-  //     });
-  //   }, []);
-
   // Initialize socket connection
   useEffect(() => {
     const socket = io(ENDPOINT, {
@@ -43,7 +33,6 @@ const UserInbox = () => {
     });
 
     socket.on("connect", () => {
-      console.log("Socket connected successfully with ID:", socket.id);
       setSocketId(socket);
     });
 
@@ -89,10 +78,8 @@ const UserInbox = () => {
   useEffect(() => {
     if (user && socketId) {
       const sellerId = user?._id;
-      console.log("Adding user to socket:", sellerId);
       socketId.emit("addUser", sellerId);
       socketId.on("getUsers", (data) => {
-        console.log("Received online users:", data);
         setOnlineUsers(data);
       });
     }
@@ -103,12 +90,6 @@ const UserInbox = () => {
     const online = Object.keys(onlineUsers).find(
       (user) => user === chatMembers
     );
-    
-    console.log("Online check:", {
-      chatMembers,
-      onlineUsers: Object.keys(onlineUsers),
-      online
-    });
 
     return online ? true : false;
   };
@@ -275,15 +256,15 @@ const UserInbox = () => {
   }, [messages]);
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[var(--color-background)]">
       {!open && (
         <>
           <Header />
-          <h1 className="text-center text-[30px] py-3 font-Poppins">
+          <h1 className="text-center text-[30px] py-3 font-Poppins bg-[var(--color-background)]">
             All Messages
           </h1>
           {/* All messages list */}
-          {conversations &&
+          {conversations.length ? (
             conversations.map((item, index) => (
               <MessageList
                 data={item}
@@ -299,7 +280,12 @@ const UserInbox = () => {
                 loading={loading}
                 inboxType={"shop"}
               />
-            ))}
+            ))
+          ) : (
+            <div className="text-center bg-[var(--color-background)] font-semibold flex items-center justify-center absolute top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 text-[20px] font-Poppins">
+              No messages found
+            </div>
+          )}
         </>
       )}
 

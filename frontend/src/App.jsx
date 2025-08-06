@@ -25,7 +25,7 @@ import {
   ShopLoginPage,
   OrderDetailsPage,
   TrackOrderPage,
-  UserInbox
+  UserInbox,
 } from "./routes/routes";
 import Loader from "./components/Layout/Loader";
 import { ProtectedRoute } from "./components/ProtectedRoutes/ProtectedRoute";
@@ -133,7 +133,9 @@ function App() {
               element={<ActivationPage type="shop" />}
             />
             <Route path="login" element={<ShopLoginPage />} />
-            <Route path=":id" element={<ShopHomePage />} />
+            <Route element={<SellerProtectedRoute />}>
+              <Route path=":id" element={<ShopHomePage />} />
+            </Route>
             <Route path="preview/:id" element={<ShopPreviewPage />} />
           </Route>
           <Route element={<SellerProtectedRoute />}>

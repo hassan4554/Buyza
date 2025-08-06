@@ -20,7 +20,7 @@ const SellerInbox = ({
     <div
       className={`w-full ${
         height ? "min-h-screen" : "min-h-full"
-      } flex flex-col justify-between`}
+      } flex flex-col justify-between bg-[var(--color-background)]`}
     >
       {/* message header */}
       <div className="w-full flex p-3 items-center justify-between bg-slate-200">

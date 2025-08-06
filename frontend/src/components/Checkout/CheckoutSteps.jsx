@@ -3,7 +3,7 @@ import styles from "../../constants/styles";
 const CheckoutSteps = ({ active }) => {
   console.log(active);
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center bg-[var(--color-background)]">
       <div className="w-[90%] 800px:w-[50%] flex items-center flex-wrap">
         <div className={`${styles.noramlFlex}`}>
           <div className={`${styles.cart_button}`}>

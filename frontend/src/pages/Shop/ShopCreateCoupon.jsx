@@ -7,7 +7,7 @@ const ShopCreateEvent = () => {
   return (
     <div>
       <DashboardHeader />
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full bg-[var(--color-background)]">
         <div className="w-[330px]">
           <DashboardSideBar active={10} />
         </div>

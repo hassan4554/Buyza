@@ -10,7 +10,7 @@ const EventsPage = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div>
+        <div className=" bg-[var(--color-background)]">
           <Header activeHeading={4} />
           {allEvents.length ? (
             <EventCard active={true} data={allEvents[0]} />

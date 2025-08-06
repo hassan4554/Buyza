@@ -5,7 +5,7 @@ import { useState } from "react";
 const DashboardSideBar = ({ active = 1 }) => {
   const [activeItem, setActiveItem] = useState(active);
   return (
-    <div className="w-full max-w-[250px] h-[90vh] bg-white shadow-sm overflow-y-scroll sticky top-0 left-0 z-10">
+    <div className="w-full max-w-[250px] h-[90vh] bg-[var(--color-background)] pb-10 shadow-sm overflow-y-scroll sticky top-0 left-0 z-10">
       {DASHBOARD_NAV_ITEMS.map((item, index) => {
         return (
           <div
