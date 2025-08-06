@@ -99,7 +99,7 @@ The platform leverages modern web technologies and a scalable database schema to
 | Review      | id, rating, comment, productId, userId, date                    |
 | Payment     | id, orderId, userId, amount, status, method                     |
 
-![ER Diagram](https://drive.google.com/file/d/1il_GTpacT5bM1R1-EuIWzkwS-5oKL-au/view?usp=sharing)
+![ER Diagram](https://crkvtlqdxghwgshmvqwh.supabase.co/storage/v1/object/public/images/buyza-ERD.png)
 
 ---
 
@@ -114,7 +114,7 @@ Login → Manage Shop/Products → View Orders → Process Orders → Create Cou
 ### Admin Flow
 Login → Manage All Entities → Oversee Platform Data → Manage Events/Coupons/Refunds
 
-![FlowChart Diagram](https://drive.google.com/file/d/16GxFlaj24BlCfP5i_cmIOqh6s4ER9BgU/view?usp=sharing)
+![FlowChart Diagram](https://crkvtlqdxghwgshmvqwh.supabase.co/storage/v1/object/public/images/buyza-FD.png)
 
 ---
 
