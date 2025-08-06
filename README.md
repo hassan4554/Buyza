@@ -1,11 +1,11 @@
 # E-commerce Multi Vendor
 
 ## Live Demo
-Check out the live demo of **E-commerce Multi Vendor**: 👉 [E-commerce Multi Vendor](https://your-demo-link.com/)
+Check out the live demo of **Buyza**: 👉 [Buyza](https://buyza.vercel.app/)
 
 ## Introduction / Overview
 
-**E-commerce Multi Vendor** is a robust platform designed to facilitate online buying and selling for multiple vendors. It streamlines the management of products, orders, payments, shops, users, and more. The system provides dedicated dashboards for **Admin**, **Sellers**, and **Customers**, enabling efficient communication, order management, and real-time updates across the marketplace ecosystem.
+**Buyza** is a robust platform designed to facilitate online buying and selling for multiple vendors. It streamlines the management of products, orders, payments, shops, users, and more. The system provides dedicated dashboards for **Admin**, **Sellers**, and **Customers**, enabling efficient communication, order management, and real-time updates across the marketplace ecosystem.
 
 The platform leverages modern web technologies and a scalable database schema to ensure security, performance, and ease of use for all stakeholders.
 
@@ -27,7 +27,7 @@ The platform leverages modern web technologies and a scalable database schema to
 - **Frontend**: React.js (Vite), Tailwind CSS, Redux
 - **Backend**: Node.js, Express.js, MongoDB
 - **Database**: MongoDB (Mongoose ORM)
-- **Deployment**: Vercel (frontend), Render/Atlas (backend/database)
+- **Deployment**: Vercel (frontend), Render (backend/socket), MongoDB cloud (Database)
 
 ---
 
